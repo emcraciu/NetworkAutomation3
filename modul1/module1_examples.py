@@ -1,28 +1,31 @@
-# create triangle - using print and other formating options
+# create triangle
 
-# version 1
-print("*")
-print("**")
-print("***")
-print("****")
-print("*****")
-
-# version 2
-print("    *    ")
-print("   * *   ")
-print("  *   *  ")
-print(" *     * ")
-print("* * * * *")
-
-# version 3
-print("  /\\")
-print(" /  \\")
-print("/____\\")
-
-# version 4
-print(r"""
-   / \
-  /   \
- /     \
-/_______\
+print("""
+    *
+   *** 
+  *****
+ *******
+*********
 """)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+for i in range(10):
+    print(" "*i+"*"*i)
