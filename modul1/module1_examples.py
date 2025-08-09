@@ -26,3 +26,19 @@ print(r"""
  /     \
 /_______\
 """)
+
+# create square - using print and other formating options
+print('''
+.............
+.           .
+.           .
+.           .
+.............
+''')
+
+# create dimond - using print and other formating options
+print("  *  \n"
+      " *** \n"
+      "*****\n"
+      " *** \n"
+      "  *  ")
