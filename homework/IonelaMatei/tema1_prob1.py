@@ -102,7 +102,7 @@ def adauga_switch():
 
         else:
             if switch_input.lower() == 'q':
-                print("Programul s-a terminat! ")
+                print("Programul s-a terminat ! ")
                 break
             elif switch_input in result:
                 print("Switch-ul a fost deja introdus")

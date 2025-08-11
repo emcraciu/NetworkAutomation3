@@ -79,6 +79,6 @@ shops = {'pro': shop_P, 'lil': shop_L, 'kau': shop_K}
 
 rezultat = best_choice(cart, shops)
 if rezultat:
-    print("Magazinul cu cele mai bune preturi si costul total:", rezultat)
+    print("Magazinul cu cele mai bune preturi si costul total: ", rezultat)
 else:
     print("Nu exista niciun magazin care sa aiba toate produsele din cos !")
