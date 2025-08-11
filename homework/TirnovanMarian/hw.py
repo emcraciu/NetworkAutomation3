@@ -1,0 +1,1 @@
+print("tema1", end=':)\n\n')
