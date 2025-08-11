@@ -1,0 +1,1 @@
+# function for first 100 prime numbers
