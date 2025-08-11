@@ -86,7 +86,7 @@ def adauga_porturi(switch, result):
 def adauga_switch():
     result = {}
     while True:
-        switch_input = input("Introduceti numele switch-ului sau q pentru a iesi : ").upper()
+        switch_input = input("Introduceti numele switch-ului sau q pentru a iesi: ").upper()
         if switch_input not in result and switch_input.lower() != 'q':
             result[switch_input] = {}
             adauga_porturi(switch_input, result)
