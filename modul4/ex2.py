@@ -1,0 +1,1 @@
+# get full configuration (running/startup config) from IOU1 and save to file
