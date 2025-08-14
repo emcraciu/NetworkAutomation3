@@ -22,6 +22,12 @@ class TelnetConnection:
     async def readuntil(self, separator: str):
         return await self.reader.readuntil(separator.encode())
 
+    async def read(self, n: int):
+        return await self.reader.read(n)
 
-conn = TelnetConnection(HOST, PORT)
-conn.print_info()
+    def write(self, data: str):
+        self.writer.write(data)
+
+if __name__ == '__main__':
+    conn = TelnetConnection(HOST, PORT)
+    conn.print_info()
