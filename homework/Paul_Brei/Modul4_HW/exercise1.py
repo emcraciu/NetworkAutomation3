@@ -19,6 +19,6 @@ sw_info=get_switch_info()
 json_string=dict_to_json(sw_info)
 yaml_string=dict_to_yaml(sw_info)
 
-print(f"json string:{json_string}")
+print(f"json string:\n{json_string}")
 print(80*'-')
-print(f"yaml string:{yaml_string}")
+print(f"yaml string:\n{yaml_string}")
