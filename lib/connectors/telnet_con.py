@@ -9,8 +9,6 @@ class TelnetConnection:
     def __init__(self, host, port):
         self.host = host
         self.port = port
-        asyncio.run(self.connect_to_device())
-
 
     async def connect_to_device(self):
         self.reader, self.writer = await telnetlib3.open_connection(self.host, self.port)
@@ -20,7 +18,8 @@ class TelnetConnection:
         print('Writer: {}'.format(self.writer))
 
     async def readuntil(self, separator: str):
-        return await self.reader.readuntil(separator.encode())
+        response = await self.reader.readuntil(separator.encode())
+        return response.decode()
 
     async def read(self, n: int):
         return await self.reader.read(n)
