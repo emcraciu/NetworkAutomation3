@@ -1,4 +1,4 @@
-class CarIterator():
+class CarIterator:
     def __init__(self, model, year, whiles):
         self.model = model
         self.year = year
@@ -6,6 +6,7 @@ class CarIterator():
 
     def __iter__(self):
         return self
+
     def __next__(self):
         if self.whiles:
             value = self.whiles
@@ -14,7 +15,8 @@ class CarIterator():
             raise StopIteration
         return value
 
-class Car():
+
+class Car:
     def __init__(self, model: str, year: int, whiles: int):
         self.model = model
         self.year = year
@@ -28,7 +30,6 @@ car = Car('Mercede', 2019, 4)
 
 for c in car:
     print(c)
-
 
 # steps for the for loop
 car_iter = car.__iter__()
