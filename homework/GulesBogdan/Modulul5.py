@@ -28,13 +28,15 @@ configuration = [
     'exit',
 
     # SSH
-    'ip domain-name cisco.com',
-    'crypto key generate rsa modulus 1024',
+    'hostname Router1',
+    'ip domain name cisco.com',
+    'crypto key generate rsa ',
+    '2048',
     'ip ssh version 2',
     'username cisco secret cisco',
-    'line vty 0 15',
-    'login local',
+    'line vty 0 4',
     'transport input ssh',
+    'login local',
     'exit',
 
     'end',
