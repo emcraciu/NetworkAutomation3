@@ -79,6 +79,7 @@ async def main():
 
 
     ssh_cmds = [
+        "hostname IOU"
         "ip domain-name savnet.ro",
         "ip ssh version 2",
         "username cisco secret cisco",
