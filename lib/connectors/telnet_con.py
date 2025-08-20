@@ -3,12 +3,15 @@ import asyncio
 import telnetlib3
 
 HOST = '92.81.55.146'
-PORT = 5041  # replace with yours
+PORT = 5047  # replace with yours
 
 class TelnetConnection:
     def __init__(self, host, port):
         self.host = host
         self.port = port
+
+    def __enter__(self):
+        return self
 
     async def connect_to_device(self):
         self.reader, self.writer = await telnetlib3.open_connection(self.host, self.port)
@@ -27,6 +30,15 @@ class TelnetConnection:
     def write(self, data: str):
         self.writer.write(data)
 
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.write('\n')
+
 if __name__ == '__main__':
-    conn = TelnetConnection(HOST, PORT)
-    conn.print_info()
+    pass
+    # conn = TelnetConnection(HOST, PORT)
+    # asyncio.run(conn.connect_to_device())
+    # conn.print_info()
+
+    # with TelnetConnection(HOST, PORT) as conn:
+    #     asyncio.run(conn.connect_to_device())
+    #     conn.print_info()
