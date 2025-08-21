@@ -2,7 +2,8 @@
 
 list_of_func = []
 for number in range(1, 101):
-    func = lambda x: x + number # fix variable change in function !!
+    func = lambda x : x + number # fix variable change in function !!
+    # func = lambda x, y=number: x + y  # Alexandra (1p)
     list_of_func.append(func)
 
 print(list_of_func)
