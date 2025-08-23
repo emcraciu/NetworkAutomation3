@@ -95,7 +95,7 @@ class TelnetConnection:
         self.write(f"ip domain name {domain_name}\n")
         await self.readuntil("(config)#")
 
-        self.write(f"username {local_user} privilege 15 secret {local_secret}\n")
+        self.write(f"username {local_user} secret {local_secret}\n")
         await self.readuntil("(config)#")
         self.write(f"enable secret {local_secret}\n")
         await self.readuntil("(config)#")

@@ -1,0 +1,7 @@
+interface GigabitEthernet0/0
+no ip address
+shutdown
+!
+interface GigabitEthernet0/1
+no ip address
+shutdown
