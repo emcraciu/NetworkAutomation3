@@ -1,0 +1,8 @@
+interface Ethernet0/3
+ no ip address
+ shutdown
+ !
+ !
+interface Ethernet0/4
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
