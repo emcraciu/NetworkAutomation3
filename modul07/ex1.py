@@ -2,6 +2,7 @@
 
 "Hello Pithon. This is converted text."
 
+# import x
 def encode(s: str) -> str:
     return ''.join(map(lambda ch: '\n' if ch == ' ' else chr(ord(ch) + 1), s))
 
