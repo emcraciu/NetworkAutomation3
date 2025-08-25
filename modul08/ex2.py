@@ -1,0 +1,1 @@
+# check if second interface has IP and if not set IP
