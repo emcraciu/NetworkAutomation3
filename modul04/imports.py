@@ -11,7 +11,7 @@ import sys
 # example_func2()
 # print(i)
 
-from modul4.example_import import example_var, example_func1
+from modul04.example_import import example_var, example_func1
 import example_package as ep
 
 print(ep)
