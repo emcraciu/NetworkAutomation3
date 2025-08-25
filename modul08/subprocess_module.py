@@ -27,14 +27,26 @@ import os
 
 # Popen
 
+# process = subprocess.Popen(
+#     ['echo', 'test'],
+#     stdin=subprocess.PIPE,
+#     stdout=subprocess.PIPE,
+#     stderr=subprocess.PIPE,
+#     shell=True,
+#     text=True,
+# )
+# std_out, std_err = process.communicate()
+# print(type(std_out))
+# print(type(std_err))
+
 process = subprocess.Popen(
-    ['echo', 'test'],
+    ['python.exe', r'C:\Users\ozy24\PycharmProjects\NetworkAutomation3\modul08\comuncate_with.py'],
     stdin=subprocess.PIPE,
     stdout=subprocess.PIPE,
     stderr=subprocess.PIPE,
     shell=True,
     text=True,
 )
-std_out, std_err = process.communicate()
-print(type(std_out))
-print(type(std_err))
+std_out, std_err = process.communicate('test')
+print(std_out)
+print(std_err)
