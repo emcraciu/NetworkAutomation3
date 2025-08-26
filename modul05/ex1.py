@@ -26,7 +26,7 @@ conn = TelnetConnection(HOST, PORT)
 
 
 async def connect_to_device():
-    await conn.connect_to_device()
+    await conn.connect()
     conn.write('\n')
     response = await conn.readuntil("IOU1#")
     if "IOU1#" in response:
