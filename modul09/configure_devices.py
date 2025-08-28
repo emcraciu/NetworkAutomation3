@@ -16,13 +16,9 @@ for port in PORTS:
     )
 
 
-async def main1():
+async def main():
     await asyncio.gather(*(con.connect() for con in CONNS))
-
-
-async def main2():
     await asyncio.gather(*(con.configure() for con in CONNS))
 
 
-asyncio.run(main1())
-asyncio.run(main2())
+asyncio.run(main())
