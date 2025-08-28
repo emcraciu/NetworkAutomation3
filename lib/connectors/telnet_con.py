@@ -28,13 +28,19 @@ class TelnetConnection:
         return await self.reader.read(n)
 
     def write(self, data: str):
-        self.writer.write(data)
+        self.writer.write(data + '\r\n')
 
     async def configure(self):
-        pass
+        self.write('')
+        await asyncio.sleep(2)
+        result = await self.read(3000)
+        if 'Router#' in result:
+            self.write('conf t')
+        elif 'IOU1#' in result:
+            self.write('conf t')
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.write('\n')
+        self.write('\r\n')
 
 if __name__ == '__main__':
     conn = TelnetConnection(HOST, PORT)
