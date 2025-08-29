@@ -1,4 +1,6 @@
 import asyncio
+from os import write
+from queue import Queue
 
 import telnetlib3
 
@@ -30,12 +32,21 @@ class TelnetConnection:
     def write(self, data: str):
         self.writer.write(data + '\r\n')
 
-    async def configure(self):
+    async def configure(self, completed: Queue = None):
         self.write('')
         await asyncio.sleep(2)
         result = await self.read(3000)
         if 'Router#' in result:
             self.write('conf t')
+            await self.readuntil('Router(config)#')
+            self.write('interface g0/0')
+            await self.readuntil('Router(config-if)#')
+            self.write('ip address 192.168.200.3 255.255.255.0')
+            await self.readuntil('Router(config-if)#')
+            self.write('no shutdown')
+            await self.readuntil('Router(config-if)#')
+            completed.put({"Router: 192.168.200.3"})
+
         elif 'IOU1#' in result:
             self.write('conf t')
 
