@@ -1,4 +1,4 @@
-# Python Lesson: The `multiprocessing` Module
+# Module10: The `multiprocessing` Module
 
 ## 1. Introduction
 The **`multiprocessing`** module allows Python programs to create and manage **separate processes**.  
@@ -11,6 +11,9 @@ Common use cases:
 ---
 
 ## 2. Creating a Process
+A Process in Python multiprocessing module is nothing more than a subprocess at os level that has the main python
+script as its parent. OS is responsible to distributing process across available resources 
+
 ```python
 from multiprocessing import Process
 import os
@@ -27,6 +30,7 @@ if __name__ == "__main__":
     p2.join()
     print("Both processes finished")
 ```
+
 ## 3. Using a Pool of Processes
 
 A Pool manages a group of worker processes.
@@ -41,6 +45,7 @@ if __name__ == "__main__":
         results = pool.map(square, [1, 2, 3, 4, 5])
         print(results)
 ```
+
 ## 4. Shared Data and Queues
 
 Use Queue or Value/Array for inter-process communication.
@@ -64,14 +69,14 @@ if __name__ == "__main__":
     p2.start(); p2.join()
 
 ```
+
 ## 5. Conclusion
 
 The multiprocessing module provides true parallelism in Python for CPU-intensive tasks.
 It is especially useful for programs that need to leverage multiple CPU cores.
 
-## 
-6. References
+## 6. References
 
-Python Docs: multiprocessing 
-
-Real Python: Intro to Python Multiprocessing
+Python Docs: [multiprocessing](https://docs.python.org/3/library/multiprocessing.html)
+Real Central: [Python Multiprocessing for Faster Execution](https://www.pythoncentral.io/python-multiprocessing-for-faster-execution/)
+Geeks For Geeks: [Communication between processes](https://www.geeksforgeeks.org/python/multiprocessing-python-set-2/)

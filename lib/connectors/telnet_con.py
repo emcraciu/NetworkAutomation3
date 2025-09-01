@@ -45,7 +45,7 @@ class TelnetConnection:
             await self.readuntil('Router(config-if)#')
             self.write('no shutdown')
             await self.readuntil('Router(config-if)#')
-            completed.put({"Router: 192.168.200.3"})
+            completed.put({"Router": "192.168.200.3"})
 
         elif 'IOU1#' in result:
             self.write('conf t')
