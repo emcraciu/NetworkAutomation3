@@ -46,8 +46,8 @@ import asyncio, threading, telnetlib3
 
 HOST, PORT = "92.81.55.146", 5072
 IFACES = {
-    "e0/1": "192.168.200.4 255.255.255.0",
-    "e0/2": "192.168.200.5 255.255.255.0"
+    "e0/1": "192.168.201.4 255.255.255.0",
+    "e0/2": "192.168.202.5 255.255.255.0"
 }
 CMDS = ["", "conf t", "int {iface}", "ip address {ip}", "no shut", "end", "wr"]
 
@@ -73,6 +73,6 @@ def thr(iface, ip):
     asyncio.run(configure(iface, ip))
 
 
-threads = [threading.Thread(target=thr, args=(i, ip)) for i, ip in IFACES.items()]
-[t.start() for t in threads]
-[t.join() for t in threads]
+# threads = [threading.Thread(target=thr, args=(i, ip)) for i, ip in IFACES.items()]
+# [t.start() for t in threads]
+# [t.join() for t in threads]
