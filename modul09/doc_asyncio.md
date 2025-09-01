@@ -32,6 +32,7 @@ asyncio.run(greet())
 - `async def` defines a coroutine.  
 - `await asyncio.sleep(1)` suspends execution for 1 second without blocking the entire program.
 - `asyncio.run` creates an event loop that will loop over awaited statements and terminate the loop on return
+- each async function will have one awaited statement in the event loop at any time
 
 ---
 
@@ -95,7 +96,8 @@ asyncio.run(main())
 ## 5. When to Use Asynchronous Execution
 - Network requests (web scraping, APIs).  
 - Database queries with async drivers.  
-- Handling multiple socket connections (e.g., chat servers).  
+- Handling multiple socket connections (e.g., chat servers).
+- low speed interfaces usb/serial 
 
 Not recommended for:
 - CPU-bound tasks (use multiprocessing or threading instead).  
