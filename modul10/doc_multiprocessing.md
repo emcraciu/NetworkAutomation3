@@ -1,4 +1,4 @@
-# Python Lesson: The `multiprocessing` Module
+# Module10: The `multiprocessing` Module
 
 ## 1. Introduction
 The **`multiprocessing`** module allows Python programs to create and manage **separate processes**.  
@@ -13,6 +13,7 @@ Common use cases:
 ## 2. Creating a Process
 A Process in Python multiprocessing module is nothing more than a subprocess at os level that has the main python
 script as its parent. OS is responsible to distributing process across available resources 
+
 ```python
 from multiprocessing import Process
 import os
@@ -77,5 +78,5 @@ It is especially useful for programs that need to leverage multiple CPU cores.
 ## 6. References
 
 Python Docs: [multiprocessing](https://docs.python.org/3/library/multiprocessing.html)
-
 Real Central: [Python Multiprocessing for Faster Execution](https://www.pythoncentral.io/python-multiprocessing-for-faster-execution/)
+Geeks For Geeks: [Communication between processes](https://www.geeksforgeeks.org/python/multiprocessing-python-set-2/)
