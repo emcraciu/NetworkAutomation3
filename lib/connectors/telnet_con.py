@@ -32,6 +32,11 @@ class TelnetConnection:
     def write(self, data: str):
         self.writer.write(data + '\r\n')
 
+    async def execute_commends(self, command: list, prompt: str):
+        for cmd in command:
+            self.write(cmd)
+            await self.readuntil(prompt)
+
     async def configure(self, completed: Queue = None):
         self.write('')
         await asyncio.sleep(2)
