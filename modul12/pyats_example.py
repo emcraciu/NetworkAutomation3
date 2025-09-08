@@ -1,8 +1,13 @@
+import asyncio
 import subprocess
+import time
+from multiprocessing import Queue
 
 from pyats import aetest, topology
 
+from lib.connectors.telnet_con import TelnetConnection
 
+q = Queue()
 # import yaml
 #
 # with open('testbed.yaml', 'r') as yaml_file:
@@ -62,9 +67,12 @@ class CommonSetup(aetest.CommonSetup):
                     ip = self.tb.devices[device].connections.telnet.ip
                     port = self.tb.devices[device].connections.telnet.port
 
-                    conn:TelnetConnection = conn_class(ip, port)
-                    conn.connect()
-
+                    conn: TelnetConnection = conn_class(ip, port)
+                    async def conf():
+                        await conn.connect()
+                        time.sleep(1)
+                        await conn.configure(q)
+                    asyncio.run(conf())
 
 
 class ConfigureInterfaces(aetest.Testcase):
