@@ -1,8 +1,13 @@
+import asyncio
 import subprocess
+import time
+from multiprocessing import Queue
 
 from pyats import aetest, topology
 
+from lib.connectors.telnet_con import TelnetConnection
 
+q = Queue()
 # import yaml
 #
 # with open('testbed.yaml', 'r') as yaml_file:
@@ -44,6 +49,31 @@ class CommonSetup(aetest.CommonSetup):
                         continue
                     subnet = self.tb.devices[device].interfaces[interface].ipv4.network.compressed
                     subprocess.run(['sudo', 'ip', 'route', 'add', f'{subnet}', 'via', f'{gateway}'])
+
+    @aetest.subsection
+    def bring_up_server_interface(self, steps):
+        for device in self.tb.devices:
+            if self.tb.devices[device].type != 'router':
+                continue
+            with steps.start(f'Bring up interface {device}', continue_=True):
+
+                for interface in self.tb.devices[device].interfaces:
+                    if self.tb.devices[device].interfaces[interface].link.name != 'management':
+                        continue
+
+                    conn_class = self.tb.devices[device].connections.get('telnet', {}).get('class', None)
+                    assert conn_class, f'No connection for device {device}'
+
+                    ip = self.tb.devices[device].connections.telnet.ip
+                    port = self.tb.devices[device].connections.telnet.port
+
+                    conn: TelnetConnection = conn_class(ip, port)
+                    async def conf():
+                        await conn.connect()
+                        time.sleep(1)
+                        await conn.configure(q)
+                    asyncio.run(conf())
+
 
 class ConfigureInterfaces(aetest.Testcase):
 
