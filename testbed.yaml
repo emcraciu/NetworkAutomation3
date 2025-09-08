@@ -68,6 +68,42 @@ devices:
             username: admin
             password: Cisco!23
 
+  CSR:
+    os: ios
+    type: router
+    custom:
+      hostname: Router
+    credentials:
+      enable:
+        password: Cisco!2345
+    connections:
+      telnet:
+        class: lib.connectors.telnet_con.TelnetConnection
+        protocol: telnet
+        ip: 192.168.10.100
+        port: 5076
+        credentials:
+          login:
+            username: admin
+            password: Cisco@135
+      ssh:
+        class: lib.connectors.ssh_con.SshConnection
+        protocol: ssh
+        ip: 192.168.200.4
+        port: 22
+        credentials:
+          login:
+            username: admin
+            password: Cisco@135
+      rest:
+        class: lib.connectors.rest_con.RESTConnector
+        protocol: ssh
+        ip: 192.168.200.4
+        port: 443
+        credentials:
+          login:
+            username: admin
+            password: Cisco@135
 
 topology:
 
@@ -109,3 +145,19 @@ topology:
         type: ethernet
         link: iosv_csr
         ipv4: 192.168.203.2/24
+
+  CSR:
+    interfaces:
+      GigabitEthernet1:
+        type: ethernet
+        alias: initial
+        link: management
+        ipv4: 192.168.200.4/24
+      GigabitEthernet2:
+        type: ethernet
+        link: iosv_csr
+        ipv4: 192.168.203.4/24
+      GigabitEthernet3:
+        type: ethernet
+        link: csr_ftd
+        ipv4: 192.168.204.4/24
