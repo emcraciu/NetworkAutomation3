@@ -41,7 +41,7 @@ class CommonSetup(aetest.CommonSetup):
                         password=conn_data.credentials.login['password'].plaintext,
                     )
                     conn.connect()
-                    print(conn.get_interface('Gi1'))
+                    print(conn.get_interface('GigabitEthernet1'))
 
 
 class ConfigureInterfaces(aetest.Testcase):
