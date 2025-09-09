@@ -24,7 +24,7 @@ devices:
       telnet:
         class: lib.connectors.telnet_con.TelnetConnection
         protocol: telnet
-        ip: 192.168.10.100
+        ip:  92.81.55.146
         port: 5072
         credentials:
           login:
@@ -52,7 +52,7 @@ devices:
       telnet:
         class: lib.connectors.telnet_con.TelnetConnection
         protocol: telnet
-        ip: 192.168.10.100
+        ip:  92.81.55.146
         port: 5073
         credentials:
           login:
@@ -80,7 +80,7 @@ devices:
       telnet:
         class: lib.connectors.telnet_con.TelnetConnection
         protocol: telnet
-        ip: 192.168.10.100
+        ip:  92.81.55.146
         port: 5076
         credentials:
           login:
