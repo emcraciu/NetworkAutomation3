@@ -1,3 +1,4 @@
+import urllib3
 from requests.auth import HTTPBasicAuth
 import requests
 
@@ -13,6 +14,7 @@ class RESTConnector:
         self._session = None
         self._headers = None
         self._url = None
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
     def connect(self):
         self._auth = HTTPBasicAuth(username=self.username, password=self.password)
