@@ -1,6 +1,5 @@
 from requests.auth import HTTPBasicAuth
 import requests
-from unicon.plugins.generic.service_statements import username, password
 
 
 class RESTConnector:
