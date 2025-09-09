@@ -86,15 +86,14 @@ class CommonSetup(aetest.CommonSetup):
                 for interface in self.tb.devices[device].interfaces:
                     if self.tb.devices[device].interfaces[interface].link.name != 'management':
                         continue
-                    conn_class: RESTConnector = self.tb.devices[device].connections["rest"]['class']
                     conn_data = self.tb.devices[device].connections["rest"]
-                    conn_obj = conn_class(
+                    conn: RESTConnector = self.tb.devices[device].connections["rest"]['class'](
                         ip=conn_data.ip.compressed,
                         port=conn_data.port,
                         username=conn_data.credentials.login['username'],
-                        password=conn_data.credentials.login['password'],
+                        password=conn_data.credentials.login['password'].plaintext,
                     )
-                    conn_obj.connect()
+                    conn.connect()
 
 
 

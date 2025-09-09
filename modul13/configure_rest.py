@@ -38,7 +38,7 @@ class CommonSetup(aetest.CommonSetup):
                         ip=conn_data.ip.compressed,
                         port=conn_data.port,
                         username=conn_data.credentials.login['username'],
-                        password=conn_data.credentials.login['password'],
+                        password=conn_data.credentials.login['password'].plaintext,
                     )
                     conn.connect()
                     print(conn.get_interface('Gi1'))
