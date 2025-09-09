@@ -75,7 +75,7 @@ devices:
       hostname: Router
     credentials:
       enable:
-        password: Cisco!2345
+        password: Cisco@135
     connections:
       telnet:
         class: lib.connectors.telnet_con.TelnetConnection
@@ -84,7 +84,7 @@ devices:
         port: 5076
         credentials:
           login:
-            username: admin
+            username: cisco
             password: Cisco@135
       ssh:
         class: lib.connectors.ssh_con.SshConnection
@@ -93,7 +93,7 @@ devices:
         port: 22
         credentials:
           login:
-            username: admin
+            username: cisco
             password: Cisco@135
       rest:
         class: lib.connectors.rest_con.RESTConnector
@@ -102,7 +102,7 @@ devices:
         port: 443
         credentials:
           login:
-            username: admin
+            username: cisco
             password: Cisco@135
 
 topology:

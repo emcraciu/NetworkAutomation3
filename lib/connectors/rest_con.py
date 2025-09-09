@@ -29,3 +29,10 @@ class RESTConnector:
         url = self._url + endpoint
         response = requests.get(url=url, auth=self._auth, headers=self._headers, verify=False)
         return response.json()
+
+
+    def get_restconf_capabilities(self):
+        restconf = f'/restconf/data/ietf-yang-library:modules-state'
+        url = self._url + restconf
+        response = requests.get(url, auth=self._auth, headers=self._headers, verify=False)
+        return response.json()
