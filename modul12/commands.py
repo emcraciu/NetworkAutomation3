@@ -8,6 +8,7 @@ commands = [
     'hostname {hostname}',
     'ip domain name {domain}',
     'username {username} password {password}',
+    'username {username} privilege 15',
     'crypto key generate rsa modulus 2048',
     'line vty 0 4',
     'login local',
