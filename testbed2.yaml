@@ -19,8 +19,6 @@ devices:
   IOU1:
     os: ios
     type: router
-    custom:
-      domain: example.com
     credentials:
       default:
         username: admin
@@ -28,13 +26,7 @@ devices:
       enable:
         password:  Cisco!246
     connections:
-      telnet:
-        class: lib.connectors.telnet_con.TelnetConnection
-        protocol: telnet
-        ip:  92.81.55.146
-        port: 5072
-      ssh:
-        class: lib.connectors.ssh_con.SshConnection
+      unicon:
         protocol: ssh
         ip: 192.168.200.1
         port: 22
@@ -42,8 +34,6 @@ devices:
   Router:
     os: ios
     type: router
-    custom:
-      domain: example.com
     credentials:
       default:
         username: admin
@@ -51,13 +41,7 @@ devices:
       enable:
         password: Cisco!246
     connections:
-      telnet:
-        class: lib.connectors.telnet_con.TelnetConnection
-        protocol: telnet
-        ip:  92.81.55.146
-        port: 5073
-      ssh:
-        class: lib.connectors.ssh_con.SshConnection
+      unicon:
         protocol: ssh
         ip: 192.168.200.2
         port: 22
@@ -65,8 +49,6 @@ devices:
   CSR:
     os: ios
     type: router
-    custom:
-      domain: example.com
     credentials:
       default:
         username: admin
@@ -74,21 +56,10 @@ devices:
       enable:
         password: Cisco!246
     connections:
-      telnet:
-        class: lib.connectors.telnet_con.TelnetConnection
-        protocol: telnet
-        ip:  92.81.55.146
-        port: 5076
-      ssh:
-        class: lib.connectors.ssh_con.SshConnection
+      unicon:
         protocol: ssh
         ip: 192.168.200.3
         port: 22
-      rest:
-        class: lib.connectors.rest_con.RESTConnector
-        protocol: https
-        ip: 192.168.200.3
-        port: 443
 
 
 topology:
