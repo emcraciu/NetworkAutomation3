@@ -35,4 +35,11 @@ class RESTConnector:
         restconf = f'/restconf/data/ietf-yang-library:modules-state'
         url = self._url + restconf
         response = requests.get(url, auth=self._auth, headers=self._headers, verify=False)
-        return response.json()
+        json_response = response.json()
+        all_yang_endpoints = list(
+            map(
+                lambda value: value.get('schema', None),
+                json_response['ietf-yang-library:modules-state']['module']
+            )
+        )
+        return all_yang_endpoints

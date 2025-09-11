@@ -1,6 +1,4 @@
-import asyncio
-import subprocess
-import time
+
 from multiprocessing import Queue
 
 from pyats import aetest, topology
