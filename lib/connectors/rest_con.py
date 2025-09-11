@@ -1,3 +1,5 @@
+import re
+
 import urllib3
 from requests.auth import HTTPBasicAuth
 import requests
@@ -43,3 +45,16 @@ class RESTConnector:
             )
         )
         return all_yang_endpoints
+
+    def get_netconf_capabilities(self):
+        netconf = f'/restconf/data/netconf-state/capabilities'
+        url = self._url + netconf
+        response = requests.get(url, auth=self._auth, headers=self._headers, verify=False)
+        json_response = response.json()
+        all_netconf_endpoints = list(
+            filter(
+                lambda value: re.findall(r'^http', value),
+                json_response['ietf-netconf-monitoring:capabilities']['capability']
+            )
+        )
+        return all_netconf_endpoints

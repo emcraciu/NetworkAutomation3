@@ -38,8 +38,9 @@ class CommonSetup(aetest.CommonSetup):
                         password=conn_data.credentials.default['password'].plaintext,
                     )
                     conn.connect()
-                    print(conn.get_restconf_capabilities())
-                    print(conn.get_interface('GigabitEthernet1'))
+                    # print(conn.get_restconf_capabilities())
+                    print(conn.get_netconf_capabilities())
+                    # print(conn.get_interface('GigabitEthernet1'))
 
 
 class ConfigureInterfaces(aetest.Testcase):
