@@ -1,6 +1,4 @@
-import asyncio
-import subprocess
-import time
+
 from multiprocessing import Queue
 
 from pyats import aetest, topology
@@ -33,15 +31,16 @@ class CommonSetup(aetest.CommonSetup):
                     if self.tb.devices[device].interfaces[interface].link.name != 'management':
                         continue
                     conn_data = self.tb.devices[device].connections["rest"]
-
                     conn: RESTConnector = self.tb.devices[device].connections["rest"]['class'](
                         ip=conn_data.ip.compressed,
                         port=conn_data.port,
-                        username=conn_data.credentials.login['username'],
-                        password=conn_data.credentials.login['password'].plaintext,
+                        username=conn_data.credentials.default['username'],
+                        password=conn_data.credentials.default['password'].plaintext,
                     )
                     conn.connect()
-                    print(conn.get_interface('GigabitEthernet1'))
+                    # print(conn.get_restconf_capabilities())
+                    print(conn.get_netconf_capabilities())
+                    # print(conn.get_interface('GigabitEthernet1'))
 
 
 class ConfigureInterfaces(aetest.Testcase):
