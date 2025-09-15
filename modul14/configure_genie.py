@@ -49,8 +49,5 @@ class ConfigureGenie(aetest.Testcase):
             config = route.build_config(apply=False)
             self.dev.configure(config[self.dev.name].cli_config.data)
 
-
-
-
 if __name__ == '__main__':
     aetest.main()
