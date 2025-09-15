@@ -47,7 +47,7 @@ devices:
         port: 22
 
   CSR:
-    os: ios
+    os: iosxe
     type: router
     credentials:
       default:
