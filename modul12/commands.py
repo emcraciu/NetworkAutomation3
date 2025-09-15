@@ -15,6 +15,7 @@ commands = [
     'transport input ssh',
     'exit',
     'ip ssh version 2',
+    # 'restconf',
     'exit',
 
 ]
