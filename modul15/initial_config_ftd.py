@@ -4,25 +4,26 @@ import sys
 import time
 
 from pyats import aetest, topology
+from pyats.aetest.steps import Step
 
 from lib.connectors.telnet_con import TelnetConnection
 
 print(sys.path)
 
 
-class CommonSetup(aetest.CommonSetup):
-    @aetest.subsection
+class ConfigureFDMManagement(aetest.Testcase):
+    @aetest.test
     def load_testbed(self, steps):
         with steps.start("Load testbed"):
             self.tb = topology.loader.load('testbed.yaml')
             self.parent.parameters.update(tb=self.tb)
 
-    @aetest.subsection
+    @aetest.test
     def bring_up_router_interface(self, steps):
         for device in self.tb.devices:
             if self.tb.devices[device].type != 'ftd':
                 continue
-            with steps.start(f'Bring up management interface {device}', continue_=True):
+            with steps.start(f'Bring up management interface {device}', continue_=True) as step:  # type: Step
 
                 for interface in self.tb.devices[device].interfaces:
                     if self.tb.devices[device].interfaces[interface].link.name != 'management':
@@ -43,6 +44,9 @@ class CommonSetup(aetest.CommonSetup):
                         out = await conn.read(n=1000)
                         print(out)
                         result = re.search(r'^(?P<login>firepower login:)', out)
+                        if not result:
+                            step.skipped(reason='Configuration not required')
+
                         if result.group('login'):
                             conn.write('admin')
                             time.sleep(0.1)
@@ -120,7 +124,9 @@ class CommonSetup(aetest.CommonSetup):
                             time.sleep(1)
                             out = await conn.read(n=1000)
 
+
                     asyncio.run(setup())
+
 
 
 class ConfigureInterfaces(aetest.Testcase):
