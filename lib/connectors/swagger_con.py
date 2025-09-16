@@ -5,7 +5,8 @@ from pyats.topology import Device
 
 
 class SwaggerConnector:
-    def __init__(self, device: Device):
+    def __init__(self, device: Device, **kwargs):
+        print('got:', kwargs)
         self.device = device
         self._session = None
         self._headers = None
@@ -14,6 +15,7 @@ class SwaggerConnector:
         self.__access_token = None
         self.__refresh_token = None
         self.__token_type = None
+        self.connected = False
 
     def connect(self):
         host = self.device.connections.swagger.ip
@@ -25,6 +27,7 @@ class SwaggerConnector:
             "Accept": "application/json",
         }
         self.__login()
+        self.connected = True
 
     def __login(self):
         endpoint = '/api/fdm/latest/fdm/token'
@@ -34,8 +37,8 @@ class SwaggerConnector:
             verify=False,
             data=json.dumps(
                 {
-                    'username': self.device.credentials.username,
-                    'password': self.device.credentials.password.plaintext,
+                    'username': self.device.credentials.default.username,
+                    'password': self.device.credentials.default.password.plaintext,
                     'grant_type': 'password',
                 }
             )

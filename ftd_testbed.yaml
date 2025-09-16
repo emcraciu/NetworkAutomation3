@@ -11,21 +11,21 @@ devices:
       enable:
         password: Cisco!246
     connections:
-      telnet:
-        class: lib.connectors.telnet_con.TelnetConnection
-        protocol: telnet
-        ip:  92.81.55.146
-        port: 5063
-      ssh:
-        class: lib.connectors.ssh_con.SshConnection
-        protocol: ssh
-        ip: 192.168.200.4
-        port: 22
-      rest:
-        class: lib.connectors.rest_con.RESTConnector
-        protocol: https
-        ip: 192.168.200.4
-        port: 443
+#      telnet:
+#        class: lib.connectors.telnet_con.TelnetConnection
+#        protocol: telnet
+#        ip:  92.81.55.146
+#        port: 5063
+#      ssh:
+#        class: lib.connectors.ssh_con.SshConnection
+#        protocol: ssh
+#        ip: 192.168.200.4
+#        port: 22
+#      rest:
+#        class: lib.connectors.rest_con.RESTConnector
+#        protocol: https
+#        ip: 192.168.200.4
+#        port: 443
       swagger:
         class: lib.connectors.swagger_con.SwaggerConnector
         protocol: https
