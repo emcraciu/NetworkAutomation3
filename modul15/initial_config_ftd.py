@@ -43,7 +43,7 @@ class ConfigureFDMManagement(aetest.Testcase):
                         time.sleep(1)
                         out = await conn.read(n=1000)
                         print(out)
-                        result = re.search(r'^(?P<login>firepower login:)', out)
+                        result = re.search(r'^\s*(?P<login>firepower login:)', out)
                         if not result:
                             step.skipped(reason='Configuration not required')
 

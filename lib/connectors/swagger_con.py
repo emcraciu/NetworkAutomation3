@@ -1,0 +1,46 @@
+import json
+
+import requests
+from pyats.topology import Device
+
+
+class SwaggerConnector:
+    def __init__(self, device: Device):
+        self.device = device
+        self._session = None
+        self._headers = None
+        self._auth = None
+        self._url = None
+        self.__access_token = None
+        self.__refresh_token = None
+        self.__token_type = None
+
+    def connect(self):
+        host = self.device.connections.swagger.ip
+        port = self.device.connections.swagger.port
+        protocol = self.device.connections.swagger.protocol
+        self._url = f"{protocol}://{host}:{port}"
+        self._headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        }
+        self.__login()
+
+    def __login(self):
+        endpoint = '/api/fdm/latest/fdm/token'
+        response = requests.post(
+            url=self._url + endpoint,
+            headers=self._headers,
+            verify=False,
+            data=json.dumps(
+                {
+                    'username': self.device.credentials.username,
+                    'password': self.device.credentials.password.plaintext,
+                    'grant_type': 'password',
+                }
+            )
+        )
+        self.__access_token = response.json()['access_token']
+        self.__refresh_token = response.json()['refresh_token']
+        self.__token_type = response.json()['token_type']
+        self._headers.update({'Authorization': f'{self.__token_type} {self.__access_token}'})
