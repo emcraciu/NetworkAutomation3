@@ -26,6 +26,12 @@ devices:
         protocol: https
         ip: 192.168.200.4
         port: 443
+      swagger:
+        class: lib.connectors.swagger_con.SwaggerConnector
+        protocol: https
+        ip: 192.168.200.4
+        port: 443
+
 
 topology:
   FTD:
