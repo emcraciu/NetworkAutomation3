@@ -26,6 +26,11 @@ devices:
 #        protocol: https
 #        ip: 192.168.200.4
 #        port: 443
+#      netmiko:
+#        class: .netmiko
+#        protocol: ssh
+#        ip: 192.168.200.4
+#        port: 22
       swagger:
         class: lib.connectors.swagger_con.SwaggerConnector
         protocol: https
