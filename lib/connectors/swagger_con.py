@@ -9,7 +9,7 @@ from bravado.requests_client import RequestsClient
 class SwaggerConnector:
     def __init__(self, device: Device, **kwargs):
         print('got:', kwargs)
-        self.device = device
+        self.device: Device = device
         self.client = None
         self._session = None
         self._headers = None
