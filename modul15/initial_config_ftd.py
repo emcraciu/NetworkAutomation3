@@ -39,7 +39,7 @@ class ConfigureFDMManagement(aetest.Testcase):
                     async def setup():
                         await conn.connect()
                         time.sleep(1)
-                        conn.write('')
+                        conn.writer.write('\n')
                         time.sleep(1)
                         out = await conn.read(n=1000)
                         print(out)
@@ -48,14 +48,14 @@ class ConfigureFDMManagement(aetest.Testcase):
                             step.skipped(reason='Configuration not required')
 
                         if result.group('login'):
-                            conn.write('admin')
-                            time.sleep(0.1)
-                            conn.write('Admin123')
+                            conn.writer.write('admin\n')
+                            time.sleep(1)
+                            conn.writer.write('Admin123\n')
                             time.sleep(1)
 
                         out = await conn.read(n=1000)
                         if 'EULA:' in out:
-                            conn.write('')
+                            conn.writer.write('\n')
 
                             while True:
                                 time.sleep(1)
@@ -63,7 +63,7 @@ class ConfigureFDMManagement(aetest.Testcase):
                                 if '--More--' in out:
                                     conn.writer.write(' ')
                                 elif 'EULA:' in out:
-                                    conn.write('')
+                                    conn.writer.write('\n')
                                     time.sleep(1)
                                     out = await conn.read(n=1000)
                                     break
@@ -71,56 +71,58 @@ class ConfigureFDMManagement(aetest.Testcase):
                                     print('no str found in eula')
 
                         if 'password:' in out:
-                            conn.write(self.tb.devices[device].credentials.default.password.plaintext)
+                            conn.writer.write(self.tb.devices[device].credentials.default.password.plaintext + '\n')
                             time.sleep(1)
                             out = await conn.read(n=1000)
                             if 'password:' in out:
-                                conn.write(self.tb.devices[device].credentials.default.password.plaintext)
+                                conn.writer.write(self.tb.devices[device].credentials.default.password.plaintext + '\n')
+                                time.sleep(1)
                                 time.sleep(1)
                                 out = await conn.read(n=1000)
 
                         if 'IPv4? (y/n) [y]:' in out:
-                            conn.write('')
+                            conn.writer.write('\n')
                             time.sleep(1)
                             out = await conn.read(n=1000)
 
                         if 'IPv6? (y/n) [n]:' in out:
-                            conn.write('')
+                            conn.writer.write('\n')
                             time.sleep(1)
                             out = await conn.read(n=1000)
 
                         if '[manual]:' in out:
-                            conn.write('')
+                            conn.writer.write('\n')
                             time.sleep(1)
                             out = await conn.read(n=1000)
 
                         if '[192.168.45.45]:' in out:
-                            conn.write(intf_obj.ipv4.ip.compressed)
+                            conn.writer.write(intf_obj.ipv4.ip.compressed + '\n')
+                            time.sleep(1)
                             time.sleep(1)
                             out = await conn.read(n=1000)
 
                         if '[255.255.255.0]:' in out:
-                            conn.write(intf_obj.ipv4.netmask.exploded)
+                            conn.writer.write(intf_obj.ipv4.netmask.exploded + '\n')
                             time.sleep(1)
                             out = await conn.read(n=1000)
 
                         if '[192.168.45.1]:' in out:
-                            conn.write((intf_obj.ipv4.ip + 1).compressed)
+                            conn.writer.write((intf_obj.ipv4.ip + 1).compressed + '\n')
                             time.sleep(1)
                             out = await conn.read(n=1000)
 
                         if '::35]:' in out:
-                            conn.write('')
+                            conn.writer.write('\n')
                             time.sleep(1)
                             out = await conn.read(n=1000)
 
                         if "'none' []:" in out:
-                            conn.write('')
+                            conn.writer.write('\n')
                             time.sleep(1)
                             out = await conn.read(n=1000)
 
                         if "locally? (yes/no) [yes]:" in out:
-                            conn.write('')
+                            conn.writer.write('\n')
                             time.sleep(1)
                             out = await conn.read(n=1000)
 
