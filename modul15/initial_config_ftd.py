@@ -55,15 +55,15 @@ class ConfigureFDMManagement(aetest.Testcase):
 
                         out = await conn.read(n=1000)
                         if 'EULA:' in out:
-                            conn.write('\n')
+                            conn.write('')
 
                             while True:
                                 time.sleep(1)
                                 out = await conn.read(n=1000)
                                 if '--More--' in out:
-                                    conn.write(' ')
+                                    conn.writer.write(' ')
                                 elif 'EULA:' in out:
-                                    conn.write('\n')
+                                    conn.write('')
                                     time.sleep(1)
                                     out = await conn.read(n=1000)
                                     break
