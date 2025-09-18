@@ -1,13 +1,16 @@
 import json
 
 import requests
+from bravado.client import SwaggerClient
 from pyats.topology import Device
+from bravado.requests_client import RequestsClient
 
 
 class SwaggerConnector:
     def __init__(self, device: Device, **kwargs):
         print('got:', kwargs)
         self.device = device
+        self.client = None
         self._session = None
         self._headers = None
         self._auth = None
@@ -28,6 +31,7 @@ class SwaggerConnector:
         }
         self.__login()
         self.connected = True
+        return self
 
     def __login(self):
         endpoint = '/api/fdm/latest/fdm/token'
@@ -47,3 +51,17 @@ class SwaggerConnector:
         self.__refresh_token = response.json()['refresh_token']
         self.__token_type = response.json()['token_type']
         self._headers.update({'Authorization': f'{self.__token_type} {self.__access_token}'})
+
+    def get_swagger_client(self):
+        endpoint = '/apispec/ngfw.json'
+        http_client = RequestsClient()
+        http_client.session.verify = False
+        http_client.ssl_verify = False
+        http_client.session.headers = self._headers
+        self.client = SwaggerClient.from_url(
+            spec_url=self._url + endpoint,
+            http_client=http_client,
+            request_headers=self._headers,
+            config={'validate_certificate': False, 'validate_responses': False},
+        )
+        return self.client
