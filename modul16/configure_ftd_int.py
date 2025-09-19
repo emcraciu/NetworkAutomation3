@@ -39,20 +39,68 @@ class ConnectFTDREST(aetest.Testcase):
 
         with steps.start('Configure FTD Interfaces'):
             existing_interfaces = swagger.Interface.getPhysicalInterfaceList().result()
+            csr_ftd = connection.device.interfaces['csr_ftd']
+            ftd_ep2 = connection.device.interfaces['ftd_ep2']
+
             for interface in existing_interfaces['items']:
-                if interface.hardwareName == connection.device.interfaces['csr_ftd'].name:
-                    interface.ipv4.ipAddress.ipAddress = connection.device.interfaces['csr_ftd'].ipv4.ip.compressed
-                    interface.ipv4.ipAddress.netmask = connection.device.interfaces['csr_ftd'].ipv4.netmask.exploded
+                if interface.hardwareName == csr_ftd.name:
+                    interface.ipv4.ipAddress.ipAddress = csr_ftd.ipv4.ip.compressed
+                    interface.ipv4.ipAddress.netmask = csr_ftd.ipv4.netmask.exploded
                     interface.ipv4.dhcp = False
                     interface.ipv4.ipType = 'STATIC'
                     interface.enable = True
-                    interface.name = connection.device.interfaces['csr_ftd'].alias
+                    interface.name = csr_ftd.alias
                     response = swagger.Interface.editPhysicalInterface(
                         objId=interface.id,
                         body=interface,
                     ).result()
                     print(response)
-                print('step')
+                if interface.hardwareName == ftd_ep2.name:
+                    interface.ipv4.ipAddress.ipAddress = ftd_ep2.ipv4.ip.compressed
+                    interface.ipv4.ipAddress.netmask = ftd_ep2.ipv4.netmask.exploded
+                    interface.ipv4.dhcp = False
+                    interface.ipv4.ipType = 'STATIC'
+                    interface.enable = True
+                    interface.name = ftd_ep2.alias
+                    response = swagger.Interface.editPhysicalInterface(
+                        objId=interface.id,
+                        body=interface,
+                    ).result()
+                    interface_for_dhcp = interface
+                    print(response)
+
+        with steps.start("Add DHCP server to interface"):
+                dhcp_servers = swagger.DHCPServerContainer.getDHCPServerContainerList().result()
+                for dhcp_server in dhcp_servers['items']:
+                    dhcp_serv_list = dhcp_server['servers']
+                    print(dhcp_serv_list)
+                    dhcp_server_model = swagger.get_model('DHCPServer')
+                    interface_ref_model = swagger.get_model('ReferenceModel')
+                    dhcp_server.servers = [
+                        dhcp_server_model(
+                            addressPool='192.168.205.100-192.168.205.200',
+                            enableDHCP=True,
+                            interface=interface_ref_model(
+                                # hardwareName=interface_ref_model.hardwareName,
+                                id=interface_for_dhcp.id,
+                                name=interface_for_dhcp.name,
+                                type='physicalinterface',
+                                # version='be5qwpeonqcmt'
+                            ),
+                            type='dhcpserver'
+                        )
+                    ]
+                    response = swagger.DHCPServerContainer.editDHCPServerContainer(
+                        objId=dhcp_server.id,
+                        body=dhcp_server,
+                    ).result()
+                    print(response)
+
+        with steps.start("Add routes"):
+            pass
+
+        with steps.start("Add allow rule"):
+            pass
 
 
 
