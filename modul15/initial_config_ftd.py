@@ -38,9 +38,9 @@ class ConfigureFDMManagement(aetest.Testcase):
 
                     async def setup():
                         await conn.connect()
-                        time.sleep(1)
+                        time.sleep(5)
                         conn.writer.write('\n')
-                        time.sleep(1)
+                        time.sleep(5)
                         out = await conn.read(n=1000)
                         print(out)
                         result = re.search(r'^\s*(?P<login>firepower login:)', out)
@@ -49,22 +49,22 @@ class ConfigureFDMManagement(aetest.Testcase):
 
                         if result.group('login'):
                             conn.writer.write('admin\n')
-                            time.sleep(1)
+                            time.sleep(5)
                             conn.writer.write('Admin123\n')
-                            time.sleep(1)
+                            time.sleep(5)
 
                         out = await conn.read(n=1000)
                         if 'EULA:' in out:
                             conn.writer.write('\n')
 
                             while True:
-                                time.sleep(1)
+                                time.sleep(5)
                                 out = await conn.read(n=1000)
                                 if '--More--' in out:
                                     conn.writer.write(' ')
                                 elif 'EULA:' in out:
                                     conn.writer.write('\n')
-                                    time.sleep(1)
+                                    time.sleep(5)
                                     out = await conn.read(n=1000)
                                     break
                                 else:
@@ -72,58 +72,56 @@ class ConfigureFDMManagement(aetest.Testcase):
 
                         if 'password:' in out:
                             conn.writer.write(self.tb.devices[device].credentials.default.password.plaintext + '\n')
-                            time.sleep(1)
+                            time.sleep(5)
                             out = await conn.read(n=1000)
                             if 'password:' in out:
                                 conn.writer.write(self.tb.devices[device].credentials.default.password.plaintext + '\n')
-                                time.sleep(1)
-                                time.sleep(1)
+                                time.sleep(5)
                                 out = await conn.read(n=1000)
 
                         if 'IPv4? (y/n) [y]:' in out:
                             conn.writer.write('\n')
-                            time.sleep(1)
+                            time.sleep(5)
                             out = await conn.read(n=1000)
 
                         if 'IPv6? (y/n) [n]:' in out:
                             conn.writer.write('\n')
-                            time.sleep(1)
+                            time.sleep(5)
                             out = await conn.read(n=1000)
 
                         if '[manual]:' in out:
                             conn.writer.write('\n')
-                            time.sleep(1)
+                            time.sleep(5)
                             out = await conn.read(n=1000)
 
                         if '[192.168.45.45]:' in out:
                             conn.writer.write(intf_obj.ipv4.ip.compressed + '\n')
-                            time.sleep(1)
-                            time.sleep(1)
+                            time.sleep(5)
                             out = await conn.read(n=1000)
 
                         if '[255.255.255.0]:' in out:
                             conn.writer.write(intf_obj.ipv4.netmask.exploded + '\n')
-                            time.sleep(1)
+                            time.sleep(5)
                             out = await conn.read(n=1000)
 
                         if '[192.168.45.1]:' in out:
                             conn.writer.write((intf_obj.ipv4.ip + 1).compressed + '\n')
-                            time.sleep(1)
+                            time.sleep(5)
                             out = await conn.read(n=1000)
 
                         if '::35]:' in out:
                             conn.writer.write('\n')
-                            time.sleep(1)
+                            time.sleep(5)
                             out = await conn.read(n=1000)
 
                         if "'none' []:" in out:
                             conn.writer.write('\n')
-                            time.sleep(1)
+                            time.sleep(10)
                             out = await conn.read(n=1000)
 
                         if "locally? (yes/no) [yes]:" in out:
                             conn.writer.write('\n')
-                            time.sleep(1)
+                            time.sleep(5)
                             out = await conn.read(n=1000)
 
 
@@ -131,13 +129,13 @@ class ConfigureFDMManagement(aetest.Testcase):
 
 
 
-class ConfigureInterfaces(aetest.Testcase):
-
-    @aetest.setup
-    def configure(self):
-        tb = self.parent.parameters['tb']
-        conn = tb.devices.IOU1.connections.telnet['class']
-        print(conn)
+# class ConfigureInterfaces(aetest.Testcase):
+#
+#     @aetest.setup
+#     def configure(self):
+#         tb = self.parent.parameters['tb']
+#         conn = tb.devices.IOU1.connections.telnet['class']
+#         print(conn)
 
 
 if __name__ == '__main__':
