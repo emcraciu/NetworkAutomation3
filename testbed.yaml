@@ -1,5 +1,5 @@
 extends:
-  - csr_testbed.yaml
+#  - csr_testbed.yaml
   - ftd_testbed.yaml
 
 testbed:
@@ -20,51 +20,51 @@ devices:
         ip: 192.168.200.254
         port: 22
 
-  IOU1:
-    os: ios
-    type: router
-    custom:
-      domain: example.com
-    credentials:
-      default:
-        username: admin
-        password: Cisco@135
-      enable:
-        password: Cisco!246
-    connections:
-      telnet:
-        class: lib.connectors.telnet_con.TelnetConnection
-        protocol: telnet
-        ip: 92.81.55.146
-        port: 5072
-      ssh:
-        class: lib.connectors.ssh_con.SshConnection
-        protocol: ssh
-        ip: 192.168.200.1
-        port: 22
-
-  Router:
-    os: ios
-    type: router
-    custom:
-      domain: example.com
-    credentials:
-      default:
-        username: admin
-        password: Cisco@135
-      enable:
-        password: Cisco!246
-    connections:
-      telnet:
-        class: lib.connectors.telnet_con.TelnetConnection
-        protocol: telnet
-        ip: 92.81.55.146
-        port: 5073
-      ssh:
-        class: lib.connectors.ssh_con.SshConnection
-        protocol: ssh
-        ip: 192.168.200.2
-        port: 22
+#  IOU1:
+#    os: ios
+#    type: router
+#    custom:
+#      domain: example.com
+#    credentials:
+#      default:
+#        username: admin
+#        password: Cisco@135
+#      enable:
+#        password: Cisco!246
+#    connections:
+#      telnet:
+#        class: lib.connectors.telnet_con.TelnetConnection
+#        protocol: telnet
+#        ip: 92.81.55.146
+#        port: 5072
+#      ssh:
+#        class: lib.connectors.ssh_con.SshConnection
+#        protocol: ssh
+#        ip: 192.168.200.1
+#        port: 22
+#
+#  Router:
+#    os: ios
+#    type: router
+#    custom:
+#      domain: example.com
+#    credentials:
+#      default:
+#        username: admin
+#        password: Cisco@135
+#      enable:
+#        password: Cisco!246
+#    connections:
+#      telnet:
+#        class: lib.connectors.telnet_con.TelnetConnection
+#        protocol: telnet
+#        ip: 92.81.55.146
+#        port: 5073
+#      ssh:
+#        class: lib.connectors.ssh_con.SshConnection
+#        protocol: ssh
+#        ip: 192.168.200.2
+#        port: 22
 
 topology:
   UbuntuServer:
@@ -74,34 +74,34 @@ topology:
         link: management
         ipv4: 192.168.200.254/24
 
-  IOU1:
-    interfaces:
-      Ethernet0/0:
-        alias: initial
-        type: ethernet
-        link: management
-        ipv4: 192.168.200.1/24
-      Ethernet0/1:
-        type: ethernet
-        link: guest1
-        ipv4: 192.168.201.1/24
-      Ethernet0/2:
-        type: ethernet
-        link: iou_iosv
-        ipv4: 192.168.202.1/24
-
-  Router:
-    interfaces:
-      GigabitEthernet0/0:
-        type: ethernet
-        alias: initial
-        link: management
-        ipv4: 192.168.200.2/24
-      GigabitEthernet0/1:
-        type: ethernet
-        link: iou_iosv
-        ipv4: 192.168.202.2/24
-      GigabitEthernet0/2:
-        type: ethernet
-        link: iosv_csr
-        ipv4: 192.168.203.2/24
+#  IOU1:
+#    interfaces:
+#      Ethernet0/0:
+#        alias: initial
+#        type: ethernet
+#        link: management
+#        ipv4: 192.168.200.1/24
+#      Ethernet0/1:
+#        type: ethernet
+#        link: guest1
+#        ipv4: 192.168.201.1/24
+#      Ethernet0/2:
+#        type: ethernet
+#        link: iou_iosv
+#        ipv4: 192.168.202.1/24
+#
+#  Router:
+#    interfaces:
+#      GigabitEthernet0/0:
+#        type: ethernet
+#        alias: initial
+#        link: management
+#        ipv4: 192.168.200.2/24
+#      GigabitEthernet0/1:
+#        type: ethernet
+#        link: iou_iosv
+#        ipv4: 192.168.202.2/24
+#      GigabitEthernet0/2:
+#        type: ethernet
+#        link: iosv_csr
+#        ipv4: 192.168.203.2/24
