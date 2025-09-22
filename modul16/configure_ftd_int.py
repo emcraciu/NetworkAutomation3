@@ -3,6 +3,7 @@ This test will configure the FTD interfaces
 """
 
 from pyats import aetest, topology
+import math
 
 from lib.connectors.swagger_con import SwaggerConnector
 
