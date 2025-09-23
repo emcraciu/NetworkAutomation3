@@ -5,22 +5,22 @@ from pyats import aetest, topology
 from genie.libs.conf.interface.iosxe import Interface
 from pyats.topology import Testbed
 from genie.libs.conf.static_routing import StaticRouting
-
+from pyats.topology import Device
 
 
 class CommonSetup(aetest.CommonSetup):
     @aetest.subsection
     def load_testbed(self, steps):
         with steps.start("Load testbed"):
-            tb = topology.loader.load('base_testbed.yaml')
+            tb = topology.loader.load('testbed_genie.yaml')
             self.parent.parameters.update(tb=tb)
 
 
 class ConfigureGenie(aetest.Testcase):
     @aetest.setup
     def connect(self, steps):
-        tb: Testbed = self.parent.parameters.get("tb")
-        self.dev = tb.devices.RouterCSR
+        tb= self.parent.parameters.get("tb")
+        self.dev: Device = tb.devices.CSR
         self.dev.connect(log_stdout=True)
         #print(dev)
     @aetest.test

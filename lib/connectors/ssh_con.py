@@ -3,7 +3,7 @@ import time
 import paramiko
 
 HOST = '192.168.200.1'
-PORT = 22  # replace with yours
+PORT = 40  # replace with yours
 
 class SshConnection:
     def __init__(self, host, port, username, password):

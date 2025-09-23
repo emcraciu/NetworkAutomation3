@@ -6,7 +6,7 @@ import asyncio
 
 from lib.connectors.telnet_con import TelnetConnection
 
-PORTS = [5073, 5072]
+PORTS = [5071, 5079]
 CONNS: list[TelnetConnection] = []
 HOST = '92.81.55.146'
 

@@ -2,7 +2,7 @@ import asyncio
 
 import telnetlib3
 HOST = '92.81.55.146'
-PORT = 5041
+PORT = 5900
 
 async def connect_to_device(host, port):
     reader, writer = await telnetlib3.open_connection(host, port)
@@ -18,6 +18,5 @@ async def connect_to_device(host, port):
         # print(response)
     # writer.close()
     # await writer.wait_closed()
-
 asyncio.run(connect_to_device(HOST, PORT))
 

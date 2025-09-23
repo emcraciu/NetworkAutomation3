@@ -1,8 +1,13 @@
-import sys
+
+from multiprocessing import Queue
 
 from pyats import aetest, topology
 
 from lib.connectors.rest_con import RESTConnector
+
+q = Queue()
+
+import sys
 
 print(sys.path)
 

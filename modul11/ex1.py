@@ -1,4 +1,85 @@
-# configure in different threads different interfaces on same IOU1 device
+import asyncio
+import telnetlib3
+
+HOST = "92.81.55.146"
+PORT = 5079  # portul Telnet spre consola routerului din GNS3
+
+IFACES = [
+    ("e0/1", "192.168.1.10", "255.255.255.0"),
+    ("e0/2", "192.168.1.11", "255.255.255.0"),
+]
+
+async def send(writer, cmd: str):
+    writer.write(cmd + "\r\n")
+    await writer.drain()
+
+async def expect(reader, mark, timeout: float = 6.0) -> str:
+    # telnetlib3.readuntil are nevoie de bytes în setup-ul tău
+    if isinstance(mark, str):
+        mark = mark.encode()
+    data = await asyncio.wait_for(reader.readuntil(mark), timeout=timeout)
+    # întoarce text pentru ușurință
+    return data.decode(errors="ignore")
+
+async def configure_all():
+    reader, writer = await telnetlib3.open_connection(HOST, PORT)
+    try:
+        # Aduce promptul
+        await send(writer, "")
+        buf = ""
+        try:
+            buf = await expect(reader, ">")
+        except asyncio.TimeoutError:
+            buf = await expect(reader, "#")
+
+        # Intră în enable dacă e în exec
+        if ">" in buf:
+            await send(writer, "enable")
+            await expect(reader, "#")
+
+        # Previne paginația
+        await send(writer, "terminal length 0")
+        await expect(reader, "#")
+
+        # Intră în config
+        await send(writer, "conf t")
+        await expect(reader, "(config)#")
+
+        # Configurează toate interfețele secvențial
+        for iface, ip, mask in IFACES:
+            await send(writer, f"interface {iface}")
+            await expect(reader, "(config-if)")
+            await send(writer, f"ip address {ip} {mask}")
+            await expect(reader, "(config-if)")
+            await send(writer, "no shutdown")
+            await expect(reader, "(config-if)")
+            await send(writer, "exit")
+            await expect(reader, "(config)#")
+            print(f"[OK] {iface} -> {ip} {mask}")
+
+        # Revino și salvează
+        await send(writer, "end")
+        await expect(reader, "#")
+        await send(writer, "write memory")  # sau 'copy running-config startup-config'
+        try:
+            await expect(reader, "#")
+        except asyncio.TimeoutError:
+            await send(writer, "")
+            await expect(reader, "#")
+
+        print("[DONE] Config saved.")
+    finally:
+        writer.close()
+        try:
+            await writer.wait_closed()
+        except Exception:
+            pass
+
+async def main():
+    await configure_all()
+
+if __name__ == "__main__":
+    asyncio.run(main())
 
 # Andrei Rad
 import threading

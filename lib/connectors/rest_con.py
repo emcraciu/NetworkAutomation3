@@ -1,5 +1,4 @@
 import re
-
 import urllib3
 from requests.auth import HTTPBasicAuth
 import requests
@@ -32,7 +31,6 @@ class RESTConnector:
         response = requests.get(url=url, auth=self._auth, headers=self._headers, verify=False)
         return response.json()
 
-
     def get_restconf_capabilities(self):
         restconf = f'/restconf/data/ietf-yang-library:modules-state'
         url = self._url + restconf
@@ -52,8 +50,8 @@ class RESTConnector:
         response = requests.get(url, auth=self._auth, headers=self._headers, verify=False)
         json_response = response.json()
         all_netconf_endpoints = list(
-            filter(
-                lambda value: re.findall(r'^http', value),
+            map(
+                lambda value: re.findall(f'^http', value),
                 json_response['ietf-netconf-monitoring:capabilities']['capability']
             )
         )

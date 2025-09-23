@@ -15,7 +15,7 @@ class ConfigureFDMManagement(aetest.Testcase):
     @aetest.test
     def load_testbed(self, steps):
         with steps.start("Load testbed"):
-            self.tb = topology.loader.load('constrained_testbed.yaml')
+            self.tb = topology.loader.load('base_testbed.yaml')
             self.parent.parameters.update(tb=self.tb)
 
     @aetest.test
@@ -106,6 +106,11 @@ class ConfigureFDMManagement(aetest.Testcase):
 
                         if '[192.168.45.1]:' in out:
                             conn.writer.write((intf_obj.ipv4.ip + 1).compressed + '\n')
+                            time.sleep(3)
+                            out = await conn.read(n=1000)
+
+                        if 'hostname' in out:
+                            conn.writer.write(self.tb.devices[device].custom.hostname + '\n')
                             time.sleep(3)
                             out = await conn.read(n=1000)
 
