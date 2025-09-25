@@ -65,3 +65,16 @@ class SwaggerConnector:
             config={'validate_certificate': False, 'validate_responses': False},
         )
         return self.client
+
+    def accept_eula(self):
+        body = {
+            "type": "initialprovision",
+            "id": "default",
+            "acceptEULA": True,
+            "startTrialEvaluation": True,
+            "selectedPerformanceTierId": "FTDv5",
+        }
+
+        self.client.InitialProvision.addInitialProvision(
+            body=body
+        ).result()
