@@ -27,7 +27,7 @@ class ConfigureGenie(aetest.Testcase):
                 name='GigabitEthernet2'
             )
             intf.device = self.dev
-            intf.ipv4 = self.dev.interfaces['GigabitEthernet2'].ipv4.ip
+            intf.ipv4 = self.dev.interfaces['GigabitEthernet2'].ipv4
             config = intf.build_config(apply=False)
             self.dev.configure(config.cli_config.data)
             print(config)
@@ -37,20 +37,17 @@ class ConfigureGenie(aetest.Testcase):
                 name='GigabitEthernet3'
             )
             intf.device = self.dev
-            intf.ipv4 = self.dev.interfaces['GigabitEthernet3'].ipv4.ip
+            intf.ipv4 = self.dev.interfaces['GigabitEthernet3'].ipv4
             config = intf.build_config(apply=False)
             self.dev.configure(config.cli_config.data)
             print(config)
 
         with steps.start("Configure static routing"):
             route = StaticRouting()
-            route.device = self.dev
-            route.route =
+            route.devices = [self.dev]
+            route.device_attr[self.dev].vrf_attr["default"].address_family_attr["ipv4"].route_attr["192.168.205.0/24"].next_hop_attr["192.168.204.4"]
             config = route.build_config(apply=False)
-            self.dev.configure(config.cli_config.data)
-
-
-
+            self.dev.configure(config[self.dev.name].cli_config.data)
 
 if __name__ == '__main__':
     aetest.main()

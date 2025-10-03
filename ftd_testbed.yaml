@@ -1,0 +1,58 @@
+devices:
+  FTD:
+    os: ftd
+    type: ftd
+    custom:
+      domain: example.com
+    credentials:
+      default:
+        username: admin
+        password: Cisco@135
+      enable:
+        password: Cisco!246
+    connections:
+#      telnet:
+#        class: lib.connectors.telnet_con.TelnetConnection
+#        protocol: telnet
+#        ip:  92.81.55.146
+#        port: 5063
+#      ssh:
+#        class: lib.connectors.ssh_con.SshConnection
+#        protocol: ssh
+#        ip: 192.168.200.4
+#        port: 22
+#      rest:
+#        class: lib.connectors.rest_con.RESTConnector
+#        protocol: https
+#        ip: 192.168.200.4
+#        port: 443
+#      netmiko:
+#        class: .netmiko
+#        protocol: ssh
+#        ip: 192.168.200.4
+#        port: 22
+      swagger:
+        class: lib.connectors.swagger_con.SwaggerConnector
+        protocol: https
+        ip: 192.168.200.4
+        port: 443
+
+
+topology:
+  FTD:
+    interfaces:
+      Management1/1:
+        type: ethernet
+        alias: initial
+        link: management
+        ipv4: 192.168.200.4/24
+      GigabitEthernet0/0:
+        type: ethernet
+        alias: csr_ftd
+        link: csr_ftd
+        ipv4: 192.168.204.4/24
+      GigabitEthernet0/1:
+        type: ethernet
+        alias: ftd_ep2
+        link: ftd_ep2
+        ipv4: 192.168.205.4/24
