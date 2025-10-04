@@ -1,0 +1,11 @@
+paramiko
+urllib3
+requests
+telnetlib3
+bravado
+pyats
+aiohttp
+genie
+pylint
+ansible-runner
+#ansible-pylibssh
