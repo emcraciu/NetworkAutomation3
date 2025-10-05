@@ -380,11 +380,12 @@ async def configure_routers(router_name, router_conn, router_topo):
     await asyncio.sleep(0.5)
     output = await reader.read(1024)
     print(output, "Write memory")
-    if router_name in ('IOSv', 'IOS'):
+    if router_name in ('IOSv', 'IOU1'):
         output = await reader.read(1024)
         if "Overwrite the previous NVRAM configuration" in output:
             writer.write("\n")
             await asyncio.sleep(0.5)
+    writer.write("\n")
     output = await reader.read(1024)
     print(output,"Configuration complete")
     writer.close()
