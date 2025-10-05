@@ -8,8 +8,7 @@ class TestSwaggerConnector(unittest.TestCase):
 
     @patch('Gules_Bogdan_project.swagger.requests.post')
     def test_login_success(self, mock_post):
-        """Testează login-ul SwaggerConnector"""
-        mock_response = MagicMock()
+        mock_response = MagicMock()#fake response
         mock_response.json.return_value = {
             'access_token': 'access123',
             'refresh_token': 'refresh123',
@@ -28,13 +27,12 @@ class TestSwaggerConnector(unittest.TestCase):
 
         self.assertTrue(connector.connected)
         self.assertEqual(connector._SwaggerConnector__access_token, 'access123')
-        self.assertEqual(connector._SwaggerConnector__refresh_token, 'refresh123')
-        self.assertEqual(connector._SwaggerConnector__token_type, 'Bearer')
+        self.assertEqual(connector._SwaggerConnector__refresh_token, 'refresh123')#refresh
+        self.assertEqual(connector._SwaggerConnector__token_type, 'Bearer')#cheks if is correctly stored
 
     @patch('Gules_Bogdan_project.swagger.SwaggerClient.from_url')
     @patch('Gules_Bogdan_project.swagger.requests.post')
     def test_connect_and_get_client(self, mock_post, mock_swagger_client):
-        """Testează obținerea clientului Swagger"""
         mock_response = MagicMock()
         mock_response.json.return_value = {
             'access_token': 'token',
@@ -63,7 +61,6 @@ class TestSwaggerConnector(unittest.TestCase):
     @patch('Gules_Bogdan_project.swagger.SwaggerClient.from_url')
     @patch('Gules_Bogdan_project.swagger.requests.post')
     def test_accept_eula_already_done(self, mock_post, mock_swagger_client):
-        """Testează acceptarea EULA dacă deja a fost acceptată"""
         mock_response = MagicMock()
         mock_response.json.return_value = {
             'access_token': 'token',
@@ -105,18 +102,15 @@ class TestSwaggerConnector(unittest.TestCase):
 
     @patch("subprocess.run")
     def test_ping_guest1_mocked(self, mock_subprocess):
-        """Testează funcția ping_guest1 cu subprocess mock"""
-        mock_subprocess.return_value = MagicMock(returncode=0)  # simulăm ping reușit
+        mock_subprocess.return_value = MagicMock(returncode=0)  #wrong ping simulation
 
         from Gules_Bogdan_project.main import ping_guest1
         ping_guest1()
 
-        # verificăm că subprocess.run a fost apelat cu argumentele corecte
         mock_subprocess.assert_called_once_with(["ping", "-c", "4", "192.168.201.10"], check=True)
 
     @patch("paramiko.SSHClient")
     def test_ssh_show_ip_mocked(self, mock_ssh_client):
-        """Testează funcția ssh_show_ip cu conexiune mock"""
         mock_ssh = MagicMock()
         mock_ssh_client.return_value = mock_ssh
         mock_stdout = MagicMock()
@@ -131,13 +125,11 @@ class TestSwaggerConnector(unittest.TestCase):
 
     @patch("subprocess.run")
     def test_ping_device_mocked(self, mock_subprocess):
-        """Testează funcția ping_device cu subprocess mock"""
         mock_subprocess.return_value = MagicMock(returncode=0)  # simulăm ping reușit
 
         from Gules_Bogdan_project.main import ping_device
         ping_device("1.1.1.1")
 
-        # verificăm că subprocess.run a fost apelat cu argumentele corecte
         mock_subprocess.assert_called_once_with(["ping", "-c", "4", "1.1.1.1"], check=True)
 
 if __name__ == '__main__':
