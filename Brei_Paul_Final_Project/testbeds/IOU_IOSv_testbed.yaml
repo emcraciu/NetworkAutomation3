@@ -1,0 +1,96 @@
+devices:
+  IOU1:
+    os: ios
+    type: router
+    alias: iou
+    custom:
+      hostname: IOU1
+      domain: ex.com
+      dhcp_pool_name: IOU1_POOL
+      dns_server: 8.8.8.8
+    credentials:
+      enable:
+        password: Cisco123!
+    connections:
+      telnet:
+        class: connectors.telnet_conn.TelnetConnection
+        protocol: telnet
+        ip: 92.81.55.146
+        port: 5074
+        credentials:
+          login:
+            username: user
+            password: Cisco123!
+      ssh:
+        class: connectors.ssh_conn.SshConnection
+        protocol: ssh
+        ip: 192.168.200.2
+        port: 22
+        credentials:
+          login:
+            username: user
+            password: Cisco123!
+
+  Router:
+    os: ios
+    type: router
+    alias: iosv
+    custom:
+      hostname: Router1
+      domain: ex.com
+    credentials:
+      enable:
+        password: Cisco123!
+    connections:
+      telnet:
+        class: connectors.telnet_conn.TelnetConnection
+        protocol: telnet
+        ip: 92.81.55.146
+        port: 5076
+        credentials:
+          login:
+            username: admin
+            password: Cisco123!
+      ssh:
+        class: connectors.ssh_conn.SshConnection
+        protocol: ssh
+        ip: 192.168.200.3
+        port: 22
+        credentials:
+          login:
+            username: admin
+            password: Cisco123!
+
+topology:
+
+  IOU1:
+    interfaces:
+      Ethernet0/0:
+        alias: initial
+        type: ethernet
+        link: management
+        ipv4: 192.168.200.2/24
+      Ethernet0/1:
+        type: ethernet
+        link: guest1_iou
+        ipv4: 192.168.210.2/24
+      Ethernet0/2:
+        type: ethernet
+        link: iou_iosv
+        ipv4: 192.168.220.2/24
+
+  Router:
+    interfaces:
+      GigabitEthernet0/0:
+        type: ethernet
+        alias: initial
+        link: management
+        ipv4: 192.168.200.3/24
+      GigabitEthernet0/1:
+        type: ethernet
+        link: iou_iosv
+        ipv4: 192.168.220.3/24
+      GigabitEthernet0/2:
+        type: ethernet
+        link: iosv_csr
+        ipv4: 192.168.230.3/24

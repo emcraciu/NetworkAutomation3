@@ -1,0 +1,54 @@
+extends:
+  - IOU_IOSv_testbed.yaml
+  - CSR_testbed.yaml
+  - FTD_testbed.yaml
+
+testbed:
+  name: NetworkAutomation3
+
+devices:
+  UbuntuServer:
+    os: linux
+    type: linux
+    connections:
+      ssh:
+        class: connectors.ssh_conn.SshConnection
+        protocol: ssh
+        ip: 192.168.200.1
+        port: 22
+        credentials:
+          login:
+            username: osboxes
+            password: osboxes.org
+
+  UbuntuDockerGuest-1:
+    alias: guest1
+    type: 'linux'
+    os: 'linux'
+    connections:
+      telnet:
+        ip: '92.81.55.146'
+        port: 5106
+        class: connectors.telnet_conn.TelnetConnection
+
+  UbuntuDockerGuest-2:
+    alias: guest2
+    type: 'linux'
+    os: 'linux'
+    connections:
+      telnet:
+        ip: '92.81.55.146'
+        port: 5108
+        class: connectors.telnet_conn.TelnetConnection
+    custom:
+      ping_ip: '192.168.250.100'
+
+
+topology:
+
+  UbuntuServer:
+    interfaces:
+      ens4:
+        type: ethernet
+        link: management
+        ipv4: 192.168.200.1/24
