@@ -1,0 +1,15 @@
+commands = [
+    "\n",
+    'hostname {hostname}',
+    'enable secret {pass_secret}',
+    'ip domain name cisco.com',
+    'username {username} password {password}',
+    'crypto key generate rsa modulus 2048',
+    'ip ssh version 2',
+    '\n',
+    'line vty 0 4',
+    'login local',
+    'transport input ssh',
+    'exit',
+    'exit',
+]
