@@ -20,7 +20,7 @@ devices:
         protocol: telnet
         ip:  92.81.55.146
         #ip:  192.168.0.9
-        port: 5100
+        port: 5022
       #      ssh:
       #        class: lib.connectors.ssh_con.SshConnection
       #        protocol: ssh

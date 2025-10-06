@@ -228,6 +228,10 @@ class TelnetConnection:
             while not '::35]:' in out:
                 time.sleep(5)
                 out = await self.read(n=1000)
+                if '[]:' in out:
+                    self.writer.write('\n')
+                    time.sleep(1)
+                    break
             else:
                 self.writer.write('\n')
                 time.sleep(1)

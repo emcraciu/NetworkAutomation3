@@ -299,88 +299,6 @@ class CommonSetup(aetest.CommonSetup):
 
                     asyncio.run(setup())
 
-    # Place this step BEFORE "Configure FTD Interfaces"
-    @aetest.subsection
-    def cleanup_and_create_zones(self, steps):
-        """Cleans up old zones and rules, then creates new zones."""
-        global USER_SELECTION
-        # --- Cleanup Access Rules ---
-        with steps.start("Cleaning up existing Access Rules", continue_=True) as step: #type: Step
-            if "ftd_interfaces" not in USER_SELECTION:
-                step.skipped("User skipped FTD interface configuration")
-                return
-            for device in self.tb.devices:
-                if self.tb.devices[device].type != 'ftd':
-                    continue
-                if "swagger" not in self.tb.devices[device].connections:
-                    continue
-                while True:
-                    try:
-                        conn : SwaggerConnector = self.tb.devices[device].connect(via="swagger")
-                        swagger = conn.get_swagger_client()
-                        break
-                    except bravado.exception.HTTPServiceUnavailable:
-                        print('FTD Device is still performing initialization!')
-                        print('Please wait a few minutes and try again.')
-                        ftd_opt = input("Would you like to try again? [y/n]: ").lower()
-                        if ftd_opt in ('y', 'yes'):
-                            continue
-
-                        step.skipped("Wrong option entered, defaulting to 'no'")
-                        tmp_list=list(USER_SELECTION)
-                        idx = tmp_list.index("ftd_interfaces")
-                        del tmp_list[idx]
-                        USER_SELECTION = set(tmp_list)
-                        print(USER_SELECTION)
-                        return
-                try:
-                    conn.accept_eula()
-                except bravado.exception.HTTPUnprocessableEntity as e:
-                    print('Initial configuration already completed:', e)
-
-                if not swagger:
-                    self.failed('No swagger connection')
-
-                try:
-                    policy_id = swagger.AccessPolicy.getAccessPolicyList().result()['items'][0].id
-                    rules = swagger.AccessPolicy.getAccessRuleList(
-                        parentId=policy_id).result().get('items', [])
-                    for rule in rules:
-                        if rule.name in ["Allow_Inside_to_Outside", "Allow_Outside_to_Inside"]:
-                            swagger.AccessPolicy.deleteAccessRule(
-                                parentId=policy_id, objId=rule.id).result()
-                except bravado.exception as e:
-                    print(f"Could not clean up access rules: {e}")
-
-        # --- Cleanup Security Zones ---
-        with steps.start("Cleaning up existing Access Rules", continue_=True) as step:
-            if "ftd_interfaces" not in USER_SELECTION:
-                step.skipped("User skipped FTD interface configuration")
-                return
-            try:
-                policy_id = self.swagger.AccessPolicy.getAccessPolicyList().result()['items'][0].id
-                rules = self.swagger.AccessPolicy.getAccessRuleList(
-                    parentId=policy_id).result().get('items', [])
-                for rule in rules:
-                    if rule.name in ["Allow_Inside_to_Outside", "Allow_Outside_to_Inside"]:
-                        self.swagger.AccessPolicy.deleteAccessRule(
-                            parentId=policy_id, objId=rule.id).result()
-            except bravado.exception as e:
-                print(f"Could not clean up access rules: {e}")
-
-        # --- Cleanup Security Zones ---
-        with steps.start("Cleaning up existing Security Zones", continue_=True) as step:
-            if "ftd_interfaces" not in USER_SELECTION:
-                step.skipped("User skipped FTD interface configuration")
-                return
-            try:
-                zones = self.swagger.SecurityZone.getSecurityZoneList().result().get('items', [])
-                for zone in zones:
-                    if zone.name in ["Inside-Zone", "Outside-Zone"]:
-                        self.swagger.SecurityZone.deleteSecurityZone(objId=zone.id).result()
-            except bravado.exception as e:
-                print(f"Could not clean up security zones: {e}")
-
     #FTD interface configuration
     @aetest.subsection
     def configure_ftd_and_deploy(self, steps):
@@ -849,7 +767,7 @@ class CommonSetup(aetest.CommonSetup):
 
                     parsed_routes_raw = await conn.get_response('show run | i ip route')
                     route_lines = parsed_routes_raw.splitlines()
-                except bravado.exception as e:
+                except Exception as e:
                     step.failed(f"Failed to parse configuration from CSR: {e}")
                     return
 
