@@ -1,0 +1,40 @@
+testbed:
+  name: SergiuOprea_swagger_ftd
+
+devices:
+  FTD:
+    os: ftd
+    type: ftd
+    custom:
+      domain: example.com
+    credentials:
+      default:
+        username: admin
+        password: Canban1!
+      enable:
+        password: Canban1!
+    connections:
+      swagger:
+        class: sergiu_oprea_proiect.lib.connectors.swagger_con.SwaggerConnector
+        protocol: https
+        ip: 192.168.200.50
+        port: 443
+
+topology:
+  FTD:
+    interfaces:
+      Management0/0:
+        type: ethernet
+        alias: initial
+        link: management
+        ipv4: 192.168.200.50/24
+      GigabitEthernet0/0:
+        type: ethernet
+        alias: csr_ftd
+        link: csr_ftd
+        ipv4: 192.168.240.20/24
+      GigabitEthernet0/1:
+        type: ethernet
+        alias: ftd_pc2
+        link: ftd_pc2
+        ipv4: 192.168.250.1/24
