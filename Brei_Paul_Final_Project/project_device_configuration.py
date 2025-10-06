@@ -613,8 +613,9 @@ class CommonSetup(aetest.CommonSetup):
                 step.skipped("User skipped FTD interface configuration")
                 return
             deployment_request = {"type": "deploymentrequest", "forceDeploy": True}
-            self.swagger.Deployment.addDeployment(body=deployment_request)
-            time.sleep(30)
+            task = self.swagger.Deployment.addDeployment(body=deployment_request).result()
+            print("Deploying, please wait")
+            time.sleep(50)
             step.passed("Deployment complete.")
 
     @aetest.subsection
@@ -883,7 +884,7 @@ if __name__ == "__main__":
         print(f"\nSelected: {USER_SELECTION}\n")
         aetest.main()
         while True:
-            opt_input=input("Do you want to continue configuration? [y/n] ")
+            opt_input=input("Do you want to continue configuration? [y/n]: ")
             #opt_input="n"
             if opt_input in ('y', 'yes'):
                 OPT=True
