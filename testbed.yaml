@@ -15,7 +15,7 @@ devices:
         password: osboxes.org
     connections:
       ssh:
-        class: lib.connectors.ssh_con.SshConnection
+        class: lib.connectors1.ssh_con.SshConnection
         protocol: ssh
         ip: 192.168.200.254
         port: 22
@@ -33,12 +33,12 @@ devices:
 #        password: Cisco!246
 #    connections:
 #      telnet:
-#        class: lib.connectors.telnet_con.TelnetConnection
+#        class: lib.connectors1.telnet_con.TelnetConnection
 #        protocol: telnet
 #        ip: 92.81.55.146
 #        port: 5072
 #      ssh:
-#        class: lib.connectors.ssh_con.SshConnection
+#        class: lib.connectors1.ssh_con.SshConnection
 #        protocol: ssh
 #        ip: 192.168.200.1
 #        port: 22
@@ -56,12 +56,12 @@ devices:
 #        password: Cisco!246
 #    connections:
 #      telnet:
-#        class: lib.connectors.telnet_con.TelnetConnection
+#        class: lib.connectors1.telnet_con.TelnetConnection
 #        protocol: telnet
 #        ip: 92.81.55.146
 #        port: 5073
 #      ssh:
-#        class: lib.connectors.ssh_con.SshConnection
+#        class: lib.connectors1.ssh_con.SshConnection
 #        protocol: ssh
 #        ip: 192.168.200.2
 #        port: 22

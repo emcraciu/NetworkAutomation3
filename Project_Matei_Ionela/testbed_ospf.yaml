@@ -1,0 +1,198 @@
+
+testbed:
+  name: NetworkAutomation3
+
+devices:
+  UbuntuServer:
+    os: linux
+    type: router
+    credentials:
+      default:
+        username: osboxes
+        password: osboxes.org
+    connections:
+      cli:
+        protocol: ssh
+        ip: 192.168.200.1
+        port: 22
+    custom:
+      hostname: UbuntuServer
+      domain: local
+      ospf:
+        router_id: 4.4.4.4
+        networks:
+          - "192.168.200.0/24 area 0"
+          - "192.168.10.0/24 area 0"
+
+
+  CSR:
+    os: iosxe
+    type: router
+    credentials:
+      default:
+        username: cisco
+        password: cisco
+      enable:
+        password: cisco
+    connections:
+      cli:
+        protocol: ssh
+        ip: 192.168.200.30
+        port: 22
+    custom:
+      hostname: CSR
+      domain: cisco.com
+      ospf:
+        router_id: 3.3.3.3
+        networks:
+          - "192.168.230.0 0.0.0.255 area 0"
+          - "192.168.240.0 0.0.0.255 area 0"
+          - "192.168.200.0 0.0.0.255 area 0"
+
+  IOU1:
+    os: ios
+    type: router
+    credentials:
+      default:
+        username: cisco
+        password: cisco
+      enable:
+        password: cisco
+    connections:
+      cli:
+        protocol: telnet
+        ip: 92.81.55.146
+        port: 5089
+    custom:
+      hostname: IOU1
+      domain: cisco.com
+      ospf:
+        router_id: 1.1.1.1
+        networks:
+          - "192.168.210.0 0.0.0.255 area 0"
+          - "192.168.220.0 0.0.0.255 area 0"
+          - "192.168.200.0 0.0.0.255 area 0"
+
+  IOSv:
+    os: ios
+    type: router
+    credentials:
+      default:
+        username: cisco
+        password: cisco
+      enable:
+        password: cisco
+    connections:
+      cli:
+        protocol: telnet
+        ip: 92.81.55.146
+        port: 5121
+      ssh:
+        protocol: ssh
+        ip: 192.168.200.20
+        port: 22
+    custom:
+      hostname: IOSv
+      domain: cisco.com
+      ospf:
+        router_id: 2.2.2.2
+        networks:
+          - "192.168.220.0 0.0.0.255 area 0"
+          - "192.168.230.0 0.0.0.255 area 0"
+          - "192.168.200.0 0.0.0.255 area 0"
+
+
+  FTD:
+    os: generic
+    type: firewall
+    credentials:
+      default:
+        username: admin
+        password: Ionela@135
+    connections:
+      swagger:
+        class: lib.connectors.swagger_connection.SwaggerConnection
+        protocol: https
+        ip: 192.168.200.40
+        port: 443
+
+    custom:
+      ospf:
+        router_id: 5.5.5.5
+        networks:
+          - "192.168.240.0/24 area 0"
+          - "192.168.250.0/24 area 0"
+
+
+
+topology:
+  UbuntuServer:
+    interfaces:
+      ens4:
+        type: ethernet
+        link: management
+        ipv4: 192.168.200.1/24
+
+  IOU1:
+    interfaces:
+      Ethernet0/0:
+        alias: initial
+        type: ethernet
+        link: management
+        ipv4: 192.168.200.10/24
+      Ethernet0/1:
+        type: ethernet
+        link: guest1
+        ipv4: 192.168.210.10/24
+      Ethernet0/2:
+        type: ethernet
+        link: iou_iosv
+        ipv4: 192.168.220.10/24
+
+  CSR:
+    interfaces:
+      GigabitEthernet1:
+        type: ethernet
+        link: management
+        ipv4: 192.168.200.30/24
+      GigabitEthernet2:
+        type: ethernet
+        link: csr_routerIosv
+        ipv4: 192.168.230.30/24
+      GigabitEthernet3:
+        type: ethernet
+        link: csr_ftd
+        ipv4: 192.168.240.30/24
+
+  IOSv:
+    interfaces:
+      GigabitEthernet0/0:
+        alias: initial
+        type: ethernet
+        link: management
+        ipv4: 192.168.200.20/24
+      GigabitEthernet0/1:
+        type: ethernet
+        link: iou_iosv
+        ipv4: 192.168.220.20/24
+      GigabitEthernet0/2:
+        type: ethernet
+        link: iosv_csr
+        ipv4: 192.168.230.20/24
+
+  FTD:
+    interfaces:
+      Management1/1:
+        type: ethernet
+        link: management
+        ipv4: 192.168.200.40/24
+      GigabitEthernet0/0:
+        type: ethernet
+        link: csr_ftd
+        alias: csr_ftd
+        ipv4: 192.168.240.40/24
+      GigabitEthernet0/1:
+        type: ethernet
+        link: ftd_ep2
+        alias: ftd_ep2
+        ipv4: 192.168.250.40/24

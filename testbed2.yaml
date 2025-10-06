@@ -11,7 +11,7 @@ devices:
         password: osboxes.org
     connections:
       ssh:
-        class: lib.connectors.ssh_con.SshConnection
+        class: lib.connectors1.ssh_con.SshConnection
         protocol: ssh
         ip: 192.168.200.254
         port: 22

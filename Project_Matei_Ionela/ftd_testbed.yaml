@@ -1,0 +1,53 @@
+devices:
+  FTD:
+    os: ftd
+    type: ftd
+    custom:
+      hostname: FTD
+      domain: cisco.com
+    credentials:
+      default:
+        username: admin
+        password: Ionela@135
+      enable:
+        password: ionela123
+    connections:
+      telnet:
+        class: lib.connectors.telnet_connection.TelnetConnection
+        protocol: telnet
+        ip:  92.81.55.146
+        port: 5094
+      ssh:
+        class: lib.connectors.ssh_connection.SshConnection
+        protocol: ssh
+        ip: 192.168.200.40
+        port: 22
+      rest:
+        class: lib.connectors1.rest_connection.RESTConnection
+        protocol: https
+        ip: 192.168.200.40
+        port: 443
+      swagger:
+        class: lib.connectors1.swagger_connection.SwaggerConnection
+        protocol: https
+        ip: 192.168.200.40
+        port: 443
+
+topology:
+  FTD:
+    interfaces:
+      Management1/1:
+        type: ethernet
+        alias: initial
+        link: management
+        ipv4: 192.168.200.40/24
+      GigabitEthernet0/0:
+        type: ethernet
+        link: csr_ftd
+        alias: csr_ftd
+        ipv4: 192.168.240.40/24
+      GigabitEthernet0/1:
+        type: ethernet
+        link: ftd_ep2
+        alias: ftd_ep2
+        ipv4: 192.168.250.40/24

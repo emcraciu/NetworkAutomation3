@@ -1,0 +1,39 @@
+devices:
+  IOSv:
+    os: ios
+    type: router
+    custom:
+      hostname: IOSv
+      domain: cisco.com
+    credentials:
+      default:
+        username: cisco
+        password: cisco
+      enable:
+        password: cisco
+    connections:
+      cli:
+        protocol: telnet
+        ip: 92.81.55.146
+        port: 5121
+      ssh:
+        protocol: ssh
+        ip: 192.168.200.20
+        port: 22
+
+topology:
+  IOSv:
+    interfaces:
+      GigabitEthernet0/0:
+        type: ethernet
+        alias: initial
+        link: management
+        ipv4: 192.168.200.20/24
+      GigabitEthernet0/1:
+        type: ethernet
+        link: iou_iosv
+        ipv4: 192.168.230.30/24
+      GigabitEthernet0/2:
+        type: ethernet
+        link: iosv_csr
+        ipv4: 192.168.240.30/24
