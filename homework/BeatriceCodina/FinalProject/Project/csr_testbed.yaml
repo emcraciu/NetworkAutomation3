@@ -1,0 +1,44 @@
+devices:
+  CSR:
+    os: ios
+    type: router
+    custom:
+      hostname: CSR
+      domain: cisco.com
+    credentials:
+      default:
+        username: cisco
+        password: cisco
+      enable:
+        password: cisco
+    connections:
+      cli:
+        protocol: telnet
+        ip: 92.81.55.146
+        port: 5164
+      ssh:
+        class: lib.connectors.ssh_connection.SshConnection
+        protocol: ssh
+        ip: 192.168.200.30
+        port: 22
+      rest:
+        class: lib.connectors.rest_connection.RESTConnection
+        protocol: ssh
+        ip: 192.168.200.30
+        port: 443
+
+topology:
+  CSR:
+    interfaces:
+      GigabitEthernet1:
+        type: ethernet
+        link: management
+        ipv4: 192.168.200.30/24
+      GigabitEthernet2:
+        type: ethernet
+        link: iosv_csr
+        ipv4: 192.168.230.30/24
+      GigabitEthernet3:
+        type: ethernet
+        link: csr_ftd
+        ipv4: 192.168.240.20/24
