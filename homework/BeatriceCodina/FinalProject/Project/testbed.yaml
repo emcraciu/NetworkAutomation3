@@ -1,0 +1,32 @@
+extends:
+  - iou1_testbed.yaml
+  - iosv_testbed.yaml
+  - csr_testbed.yaml
+  - ftd_testbed.yaml
+  - ubuntu_docker1_tesbed.yaml
+
+testbed:
+  name: NetworkAutomation3
+
+devices:
+  UbuntuServer:
+    os: linux
+    type: linux
+    connections:
+      ssh:
+        class: lib.connectors.ssh_connection.SshConnection
+        protocol: ssh
+        ip: 192.168.200.1
+        port: 22
+        credentials:
+          login:
+            username: osboxes
+            password: osboxes.org
+
+topology:
+  UbuntuServer:
+    interfaces:
+      ens4:
+        type: ethernet
+        link: management
+        ipv4: 192.168.200.1/24

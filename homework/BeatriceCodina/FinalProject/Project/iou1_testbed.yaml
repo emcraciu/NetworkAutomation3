@@ -1,0 +1,31 @@
+devices:
+  IOU1:
+    os: ios
+    type: router
+    credentials:
+      default:
+        username: cisco
+        password: cisco
+      enable:
+        password: cisco
+    connections:
+      cli:
+        protocol: telnet
+        ip: 92.81.55.146
+        port: 5157
+
+topology:
+  IOU1:
+    interfaces:
+      Ethernet0/0:
+        ipv4: 192.168.200.10/24
+        link: management
+        type: ethernet
+      Ethernet0/1:
+        ipv4: 192.168.210.10/24
+        link: guest1
+        type: ethernet
+      Ethernet0/2:
+        ipv4: 192.168.220.10/24
+        link: iou_iosv
+        type: ethernet
