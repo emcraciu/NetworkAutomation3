@@ -1,0 +1,18 @@
+
+devices:
+  UbuntuDocker1:
+    os: linux
+    type: docker
+    credentials:
+      default:
+        username: cisco
+        password: cisco
+    connections:
+      cli:
+        protocol: telnet
+        ip: 92.81.55.146
+        port: 5173 # de modificatt
+        settings:
+          PROMPT: ".*#"       # assume shell prompt ends with #
+          INIT_EXEC_COMMANDS: [ ]
+          INIT_CONFIG_COMMANDS: [ ]  # nu caută login prompt

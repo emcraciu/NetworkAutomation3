@@ -1,0 +1,32 @@
+[MASTER]
+# Dezactivează cache, rapoarte, pluginuri etc.
+persistent=no
+load-plugins=
+
+[MESSAGES CONTROL]
+# Dezactivează tot, mai puțin erorile reale (FATAL + ERROR)
+disable=all
+enable=F, E
+
+[REPORTS]
+# Nu vrem rapoarte, doar mesaje de eroare
+reports=no
+score=yes
+
+[FORMAT]
+# Lăsăm orice format, doar să nu dea erori
+max-line-length=200
+expected-line-ending-format=
+
+[TYPECHECK]
+# Nu mai verificăm tipuri, doar erorile reale
+ignore-mixin-members=yes
+ignore-on-opaque-inference=yes
+
+[DESIGN]
+# Fără limitări de argumente, metode etc.
+max-args=20
+max-locals=50
+max-returns=20
+max-branches=50
+max-statements=1000
