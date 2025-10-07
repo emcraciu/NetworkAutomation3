@@ -1,0 +1,72 @@
+devices:
+  IOU1:
+    os: ios
+    type: router
+    credentials:
+      default:
+        username: cisco
+        password: cisco
+      enable:
+        password: cisco
+    connections:
+      cli:
+        protocol: telnet
+        ip: 92.81.55.146
+        port: 5091
+
+topology:
+  IOU1:
+    interfaces:
+      Ethernet0/0:
+        ipv4: 192.168.200.10/24
+        link: management
+        type: ethernet
+      Ethernet0/1:
+        ipv4: 192.168.210.10/24
+        link: guest1
+        type: ethernet
+      Ethernet0/2:
+        ipv4: 192.168.220.10/24
+        link: iou_iosv
+        type: ethernet
+
+#devices:
+#  IOU1:
+#    os: ios
+#    type: router
+#    custom:
+#      hostname: IOU1
+#      domain: cisco.com
+#    credentials:
+#      default:
+#        username: cisco
+#        password: cisco
+#      enable:
+#        password: cisco
+#    connections:
+#      telnet:
+#        class: lib.connectors1.telnet_connection.TelnetConnection
+#        protocol: telnet
+#        ip: 92.81.55.146
+#        port: 5051
+##      ssh:
+##        class: lib.connectors1.ssh_connection.SSHConnection
+##        protocol: ssh
+##        ip: 192.168.200.10
+##        port: 27
+#
+#topology:
+#  IOU1:
+#    interfaces:
+#      Ethernet0/0:
+#        type: ethernet
+#        link: management
+#        ipv4: 192.168.200.10/24
+#      Ethernet0/1:
+#        type: ethernet
+#        link: guest1
+#        ipv4: 192.168.210.10/24
+#      Ethernet0/2:
+#        type: ethernet
+#        link: iou_iosv
+#        ipv4: 192.168.220.10/24
